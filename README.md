@@ -77,7 +77,7 @@ git clone https://github.com/your-username/silent-struggles.git
 cd silent-struggles
 
 # Open directly in browser — no build step required
-open SilentStruggles.html
+open index.html
 ```
 
 That's it. No npm install, no server, no dependencies. Opens in any browser.

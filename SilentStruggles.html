@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Silent Struggles — AI Mental Wellness Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ──────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:       #0F0E1A;
+  --bg2:      #16152A;
+  --bg3:      #1E1D35;
+  --card:     #1A1930;
+  --card2:    #221F3A;
+  --rose:     #E8637A;
+  --rose-dim: rgba(232,99,122,0.15);
+  --teal:     #2DD4BF;
+  --teal-dim: rgba(45,212,191,0.12);
+  --amber:    #F59E0B;
+  --amber-dim:rgba(245,158,11,0.12);
+  --violet:   #8B5CF6;
+  --violet-dim:rgba(139,92,246,0.12);
+  --green:    #10B981;
+  --green-dim:rgba(16,185,129,0.12);
+  --text:     #F0EEF8;
+  --text2:    #9896B4;
+  --text3:    #5F5D7E;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.12);
+  --r:        14px;
+  --r2:       20px;
+  --shadow:   0 8px 32px rgba(0,0,0,0.4);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* ── SCROLLBAR ─────────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--violet);border-radius:3px}
+
+/* ── LAYOUT ────────────────────────────────────────────────── */
+.shell{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ───────────────────────────────────────────────── */
+.sidebar{
+  width:260px;flex-shrink:0;background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;height:100vh;z-index:100;
+  overflow-y:auto;
+}
+.logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--rose),var(--violet));border-radius:10px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.logo-text{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;line-height:1.2}
+.logo-text span{display:block;font-size:10px;font-family:'Inter',sans-serif;color:var(--text2);font-weight:400;margin-top:2px}
+
+.nav{padding:16px 12px;flex:1}
+.nav-section{margin-bottom:6px;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1.2px;padding:0 8px;margin-top:14px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;
+  border-radius:10px;cursor:pointer;transition:all .2s;
+  font-size:13.5px;font-weight:500;color:var(--text2);margin-bottom:2px;
+  border:1px solid transparent;
+}
+.nav-item:hover{background:var(--card2);color:var(--text)}
+.nav-item.active{background:var(--violet-dim);color:var(--violet);border-color:rgba(139,92,246,0.2)}
+.nav-item .ni{font-size:17px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--rose);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px}
+
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.risk-card{background:var(--card);border-radius:var(--r);padding:14px}
+.risk-label{font-size:11px;color:var(--text2);margin-bottom:8px}
+.risk-bar-wrap{background:var(--bg);border-radius:4px;height:6px;overflow:hidden;margin-bottom:8px}
+.risk-bar{height:100%;border-radius:4px;transition:width 1s ease}
+.risk-level{font-size:12px;font-weight:600}
+
+/* ── MAIN CONTENT ──────────────────────────────────────────── */
+.main{margin-left:260px;flex:1;display:flex;flex-direction:column}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(15,14,26,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.topbar-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.user-pill{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;background:var(--card2);border-radius:50px;cursor:pointer;border:1px solid var(--border)}
+.user-avatar{width:32px;height:32px;background:linear-gradient(135deg,var(--teal),var(--violet));border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff}
+.user-info{line-height:1.2}
+.user-name{font-size:13px;font-weight:600}
+.user-sub{font-size:11px;color:var(--text2)}
+.lang-pill{padding:6px 12px;background:var(--card2);border-radius:50px;font-size:12px;cursor:pointer;border:1px solid var(--border);display:flex;align-items:center;gap:6px}
+
+/* ── PAGE ──────────────────────────────────────────────────── */
+.page{display:none;padding:28px 32px;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ─────────────────────────────────────────────────── */
+.card{background:var(--card);border-radius:var(--r2);border:1px solid var(--border);padding:24px}
+.card-sm{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:18px}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.section-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+/* ── BUTTONS ───────────────────────────────────────────────── */
+.btn{padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,var(--violet),#6D28D9);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(139,92,246,0.4)}
+.btn-rose{background:linear-gradient(135deg,var(--rose),#C0392B);color:#fff}
+.btn-teal{background:linear-gradient(135deg,var(--teal),#0891B2);color:#0F0E1A;font-weight:700}
+.btn-ghost{background:var(--card2);color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn-sm{padding:7px 14px;font-size:13px}
+
+/* ── INPUTS ────────────────────────────────────────────────── */
+.input, .textarea, select.input{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:10px;
+  color:var(--text);padding:12px 16px;font-size:14px;font-family:'Inter',sans-serif;
+  width:100%;transition:border .2s;outline:none;
+}
+.input:focus,.textarea:focus{border-color:var(--violet)}
+.textarea{resize:vertical;min-height:90px}
+.input-label{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block}
+
+/* ── STAT PILL ─────────────────────────────────────────────── */
+.stat-card{background:var(--card2);border-radius:var(--r);padding:16px;border:1px solid var(--border)}
+.stat-number{font-size:28px;font-weight:700;font-family:'Playfair Display',serif;line-height:1}
+.stat-label{font-size:11px;color:var(--text2);margin-top:4px}
+
+/* ── TABS ──────────────────────────────────────────────────── */
+.tabs{display:flex;gap:4px;background:var(--bg3);border-radius:12px;padding:4px;margin-bottom:24px}
+.tab{padding:8px 18px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);transition:all .2s;flex:1;text-align:center}
+.tab.active{background:var(--card);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+
+/* ── BREATHING ORB ─────────────────────────────────────────── */
+.orb-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 0}
+.orb{
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 38% 38%, #A78BFA, #7C3AED, #4C1D95);
+  box-shadow:0 0 60px rgba(139,92,246,0.4),0 0 120px rgba(139,92,246,0.15);
+  animation:breathe 4s ease-in-out infinite;
+  cursor:pointer;transition:all .3s;position:relative;display:grid;place-items:center;
+}
+.orb.happy{background:radial-gradient(circle at 38% 38%,#6EE7B7,#10B981,#065F46);box-shadow:0 0 60px rgba(16,185,129,0.5),0 0 120px rgba(16,185,129,0.2);animation:breathe-fast 2.5s ease-in-out infinite}
+.orb.sad{background:radial-gradient(circle at 38% 38%,#93C5FD,#3B82F6,#1E3A8A);box-shadow:0 0 60px rgba(59,130,246,0.4);animation:breathe-slow 6s ease-in-out infinite}
+.orb.anxious{background:radial-gradient(circle at 38% 38%,#FCD34D,#F59E0B,#92400E);box-shadow:0 0 60px rgba(245,158,11,0.5);animation:breathe-erratic 1.8s ease-in-out infinite}
+.orb.crisis{background:radial-gradient(circle at 38% 38%,#FCA5A5,#EF4444,#7F1D1D);box-shadow:0 0 60px rgba(239,68,68,0.6);animation:breathe-erratic 1.2s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1);box-shadow:0 0 60px rgba(139,92,246,0.4)}50%{transform:scale(1.08);box-shadow:0 0 80px rgba(139,92,246,0.6)}}
+@keyframes breathe-fast{0%,100%{transform:scale(1)}50%{transform:scale(1.1);box-shadow:0 0 80px rgba(16,185,129,0.7)}}
+@keyframes breathe-slow{0%,100%{transform:scale(0.97)}50%{transform:scale(1.05)}}
+@keyframes breathe-erratic{0%{transform:scale(1)}30%{transform:scale(1.12)}60%{transform:scale(0.95)}100%{transform:scale(1)}}
+.orb-emoji{font-size:48px;pointer-events:none}
+.orb-label{margin-top:16px;font-size:13px;color:var(--text2);text-align:center}
+.orb-mood{font-size:15px;font-weight:600;color:var(--text);margin-top:4px}
+
+/* ── MOOD BUTTONS ──────────────────────────────────────────── */
+.mood-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.mood-btn{
+  background:var(--card2);border:2px solid var(--border2);border-radius:var(--r);
+  padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;
+}
+.mood-btn:hover,.mood-btn.sel{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.mood-btn .moji{font-size:28px;display:block;margin-bottom:6px}
+.mood-btn .mlabel{font-size:11px;color:var(--text2);font-weight:500}
+.mood-btn.sel-1{border-color:var(--rose);background:var(--rose-dim)}
+.mood-btn.sel-2{border-color:var(--amber);background:var(--amber-dim)}
+.mood-btn.sel-3{border-color:var(--violet);background:var(--violet-dim)}
+.mood-btn.sel-4{border-color:var(--teal);background:var(--teal-dim)}
+.mood-btn.sel-5{border-color:var(--green);background:var(--green-dim)}
+
+/* ── RISK METER ────────────────────────────────────────────── */
+.risk-meter-wrap{margin:20px 0}
+.risk-track{height:12px;background:linear-gradient(90deg,#10B981,#F59E0B 50%,#EF4444);border-radius:6px;position:relative;margin-bottom:8px}
+.risk-thumb{
+  width:20px;height:20px;background:#fff;border-radius:50%;
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);transition:left 1s ease;
+  pointer-events:none;
+}
+.risk-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
+
+/* ── CRISIS BANNER ─────────────────────────────────────────── */
+.crisis-banner{
+  background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(127,29,29,0.2));
+  border:1px solid rgba(239,68,68,0.4);border-radius:var(--r);
+  padding:16px 20px;display:flex;align-items:center;gap:16px;margin-bottom:20px;
+  display:none;
+}
+.crisis-banner.visible{display:flex}
+.crisis-icon{font-size:28px;flex-shrink:0}
+.crisis-text h4{font-size:14px;font-weight:700;color:#FCA5A5;margin-bottom:4px}
+.crisis-text p{font-size:13px;color:var(--text2)}
+.crisis-btns{margin-left:auto;display:flex;gap:8px;flex-shrink:0}
+
+/* ── CHECKIN HISTORY ───────────────────────────────────────── */
+.history-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto}
+.history-item{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  background:var(--bg3);border-radius:10px;border:1px solid var(--border);
+}
+.history-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.history-text{flex:1;font-size:13px}
+.history-score{font-size:12px;font-weight:600;margin-left:auto}
+.history-time{font-size:11px;color:var(--text3);margin-left:8px}
+
+/* ── RESOURCE CARDS ────────────────────────────────────────── */
+.resource-card{
+  background:var(--card2);border-radius:var(--r);padding:16px;border:1px solid var(--border);
+  display:flex;gap:14px;align-items:flex-start;
+}
+.res-icon{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.res-info h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.res-info p{font-size:12px;color:var(--text2);line-height:1.5}
+.res-btn{margin-top:8px}
+
+/* ── PEER POSTS ────────────────────────────────────────────── */
+.post-card{background:var(--card2);border-radius:var(--r);padding:18px;border:1px solid var(--border);margin-bottom:14px}
+.post-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.post-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:600;color:#fff;flex-shrink:0}
+.post-user{font-size:13px;font-weight:600}
+.post-time{font-size:11px;color:var(--text3)}
+.post-tag{font-size:10px;padding:3px 8px;border-radius:20px;margin-left:auto;font-weight:600}
+.post-body{font-size:13.5px;line-height:1.7;color:var(--text2);margin-bottom:14px}
+.post-actions{display:flex;gap:10px}
+.post-btn{padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;color:var(--text2);transition:all .2s;display:flex;align-items:center;gap:5px}
+.post-btn:hover{background:var(--card);color:var(--text)}
+.post-btn.liked{background:var(--rose-dim);border-color:var(--rose);color:var(--rose)}
+.compose-box{background:var(--card2);border-radius:var(--r);padding:16px;border:1px solid var(--border);margin-bottom:20px}
+.compose-box h4{font-size:13px;font-weight:600;margin-bottom:10px}
+
+/* ── LITERACY ──────────────────────────────────────────────── */
+.lesson-card{
+  background:var(--card2);border-radius:var(--r);padding:20px;border:1px solid var(--border);
+  cursor:pointer;transition:all .2s;
+}
+.lesson-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.lesson-card.done{border-color:var(--green);background:var(--green-dim)}
+.lesson-icon{font-size:32px;margin-bottom:10px}
+.lesson-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.lesson-desc{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:12px}
+.lesson-progress{background:var(--bg3);border-radius:4px;height:4px;overflow:hidden}
+.lesson-fill{height:100%;border-radius:4px;background:var(--green);transition:width .8s ease}
+.xp-badge{font-size:10px;font-weight:700;padding:3px 8px;background:var(--amber-dim);border:1px solid var(--amber);border-radius:20px;color:var(--amber)}
+
+/* ── QUIZ ──────────────────────────────────────────────────── */
+.quiz-wrap{display:none}
+.quiz-wrap.open{display:block}
+.quiz-q{font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  padding:12px 16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);
+  cursor:pointer;font-size:13.5px;transition:all .2s;
+}
+.quiz-opt:hover{border-color:var(--violet);background:var(--violet-dim)}
+.quiz-opt.correct{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.quiz-opt.wrong{background:var(--rose-dim);border-color:var(--rose);color:var(--rose)}
+.quiz-feedback{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13px;line-height:1.6;display:none}
+.quiz-feedback.show{display:block}
+
+/* ── BIOMARKER ─────────────────────────────────────────────── */
+.bio-ring-wrap{display:flex;justify-content:center;gap:32px;padding:20px 0}
+.bio-ring{position:relative;width:100px;height:100px}
+.bio-ring svg{transform:rotate(-90deg)}
+.bio-ring .ring-bg{fill:none;stroke:var(--bg3);stroke-width:8}
+.bio-ring .ring-val{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease}
+.bio-ring .ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-num{font-size:20px;font-weight:700}
+.ring-lbl{font-size:9px;color:var(--text3);text-align:center;margin-top:2px}
+
+/* ── TIMELINE ──────────────────────────────────────────────── */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border2)}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-21px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg2);flex-shrink:0}
+.tl-time{font-size:11px;color:var(--text3);margin-bottom:3px}
+.tl-text{font-size:13px;color:var(--text2);line-height:1.5}
+
+/* ── CHART BARS ────────────────────────────────────────────── */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:100px;padding:0 4px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:height 1s ease;min-height:4px}
+.bar-day{font-size:10px;color:var(--text3)}
+
+/* ── CRISIS PAGE ───────────────────────────────────────────── */
+.crisis-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.helpline-card{
+  background:var(--card2);border-radius:var(--r);padding:18px;
+  border:1px solid var(--border);display:flex;flex-direction:column;gap:8px;
+}
+.helpline-name{font-size:15px;font-weight:700}
+.helpline-number{font-size:24px;font-weight:700;font-family:'Playfair Display',serif;color:var(--teal)}
+.helpline-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.safe-tip{background:var(--bg3);border-radius:10px;padding:12px 16px;border-left:3px solid var(--teal);font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+
+/* ── PROFILE ───────────────────────────────────────────────── */
+.profile-avatar-lg{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--violet));
+  display:grid;place-items:center;font-size:32px;color:#fff;margin-bottom:12px;
+}
+.tag-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tag{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border2);color:var(--text2)}
+
+/* ── SENTIMENT WORDS ───────────────────────────────────────── */
+.sentiment-out{
+  background:var(--bg3);border-radius:var(--r);padding:16px;border:1px solid var(--border);
+  margin-top:12px;display:none;
+}
+.sentiment-out.show{display:block}
+.sent-score{font-size:13px;font-weight:600;margin-bottom:8px}
+.sent-words{display:flex;flex-wrap:wrap;gap:6px}
+.sent-word{padding:3px 10px;border-radius:20px;font-size:12px}
+.sent-word.pos{background:var(--green-dim);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+.sent-word.neg{background:var(--rose-dim);color:var(--rose);border:1px solid rgba(232,99,122,0.3)}
+.sent-word.neu{background:var(--violet-dim);color:var(--violet);border:1px solid rgba(139,92,246,0.3)}
+
+/* ── NOTIFICATION DOT ──────────────────────────────────────── */
+.dot{width:8px;height:8px;background:var(--rose);border-radius:50%;display:inline-block}
+
+/* ── ONBOARDING STEPS ──────────────────────────────────────── */
+.step-pill{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);
+  margin-bottom:10px;
+}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--violet);display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+.step-text{font-size:13px}
+
+/* ── RESPONSIVE HINT ───────────────────────────────────────── */
+@media(max-width:900px){
+  .sidebar{width:64px;overflow:hidden}
+  .logo-text,.nav-section,.nav-item span:not(.ni){display:none}
+  .nav-badge{display:none}
+  .main{margin-left:64px}
+  .grid-4{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── SIDEBAR ─────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🧠</div>
+    <div class="logo-text">Silent Struggles<span>Mental Wellness AI</span></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section">MAIN</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <span class="ni">🏠</span><span>Dashboard</span>
+    </div>
+    <div class="nav-item" onclick="showPage('checkin',this)">
+      <span class="ni">💬</span><span>Mood Check-in</span>
+    </div>
+    <div class="nav-item" onclick="showPage('biomarker',this)">
+      <span class="ni">📊</span><span>Wellness Signals</span>
+    </div>
+    <div class="nav-section">COMMUNITY</div>
+    <div class="nav-item" onclick="showPage('peer',this)">
+      <span class="ni">🤝</span><span>Peer Circles</span>
+      <span class="nav-badge">3</span>
+    </div>
+    <div class="nav-section">GROW</div>
+    <div class="nav-item" onclick="showPage('literacy',this)">
+      <span class="ni">📚</span><span>Learn & Grow</span>
+    </div>
+    <div class="nav-section">SUPPORT</div>
+    <div class="nav-item" onclick="showPage('crisis',this)">
+      <span class="ni">🆘</span><span>Crisis Support</span>
+    </div>
+    <div class="nav-item" onclick="showPage('profile',this)">
+      <span class="ni">👤</span><span>My Profile</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="risk-card">
+      <div class="risk-label">Your Wellness Risk</div>
+      <div class="risk-bar-wrap">
+        <div class="risk-bar" id="sideRiskBar" style="width:28%;background:linear-gradient(90deg,#10B981,#3B82F6)"></div>
+      </div>
+      <div class="risk-level" id="sideRiskLevel" style="color:#10B981">Low Risk ✓</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ── MAIN ─────────────────────────────────────────────── -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">My Dashboard</div>
+    <div class="topbar-right">
+      <div class="lang-pill" onclick="cycleLang(this)">🌐 <span id="langLabel">English</span></div>
+      <div class="user-pill">
+        <div class="user-avatar">P</div>
+        <div class="user-info">
+          <div class="user-name">Priya S.</div>
+          <div class="user-sub">Women's Group</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ─────────────────────────────────── -->
+  <div class="page active" id="page-dashboard">
+    <div style="margin-bottom:24px">
+      <div class="section-title">Welcome back, Priya 🌸</div>
+      <div class="section-sub">Your wellness journey continues. You've checked in 7 days in a row!</div>
+    </div>
+
+    <div id="crisisBanner" class="crisis-banner">
+      <div class="crisis-icon">🚨</div>
+      <div class="crisis-text">
+        <h4>High Distress Detected</h4>
+        <p>Our AI has noticed signs of significant distress in your recent check-ins. Please reach out.</p>
+      </div>
+      <div class="crisis-btns">
+        <button class="btn btn-rose btn-sm" onclick="showPage('crisis',document.querySelector('[onclick*=crisis]'))">Get Help Now</button>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('crisisBanner').classList.remove('visible')">Dismiss</button>
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:20px">
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--violet)">7</div>
+        <div class="stat-label">Day Streak 🔥</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--teal)">68<span style="font-size:16px">%</span></div>
+        <div class="stat-label">Wellness Score</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--amber)">240</div>
+        <div class="stat-label">XP Earned ⭐</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--rose)">Low</div>
+        <div class="stat-label">Risk Level</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:16px">7-Day Mood Trend</div>
+        <div class="bar-chart" id="moodChart"></div>
+        <div style="display:flex;justify-content:space-between;padding:0 4px">
+          <span style="font-size:10px;color:var(--text3)">Mon</span>
+          <span style="font-size:10px;color:var(--text3)">Tue</span>
+          <span style="font-size:10px;color:var(--text3)">Wed</span>
+          <span style="font-size:10px;color:var(--text3)">Thu</span>
+          <span style="font-size:10px;color:var(--text3)">Fri</span>
+          <span style="font-size:10px;color:var(--text3)">Sat</span>
+          <span style="font-size:10px;color:var(--text3)">Today</span>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px">Recent Activity</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--green)"></div>
+            <div class="tl-time">Today, 8:42 AM</div>
+            <div class="tl-text">Morning check-in completed — mood: Calm 😌</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--violet)"></div>
+            <div class="tl-time">Yesterday, 7:18 PM</div>
+            <div class="tl-text">Completed lesson: <b>Understanding Anxiety</b> +30 XP</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--teal)"></div>
+            <div class="tl-time">Yesterday, 11:05 AM</div>
+            <div class="tl-text">Replied in <b>New Mothers Circle</b> — 5 helpful votes</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--amber)"></div>
+            <div class="tl-time">2 days ago</div>
+            <div class="tl-text">Biomarker scan: typing rhythm normal, voice tone calm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px">Recommended for You</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="resource-card">
+            <div class="res-icon" style="background:var(--violet-dim)">🧘</div>
+            <div class="res-info">
+              <h4>5-Minute Breathing Exercise</h4>
+              <p>Box breathing technique to reduce anxiety in under 5 minutes</p>
+              <button class="btn btn-ghost btn-sm res-btn" onclick="alert('🧘 Starting breathing exercise...\n\nInhale for 4 counts → Hold for 4 → Exhale for 4 → Hold for 4\n\nRepeat 4 times. You got this! 💜')">Start Now</button>
+            </div>
+          </div>
+          <div class="resource-card">
+            <div class="res-icon" style="background:var(--teal-dim)">📖</div>
+            <div class="res-info">
+              <h4>Postpartum Depression Guide</h4>
+              <p>A gentle, stigma-free guide for new mothers in Telugu & Hindi</p>
+              <button class="btn btn-ghost btn-sm res-btn" onclick="showPage('literacy',document.querySelector('[onclick*=literacy]'))">Read Guide</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px">Active Peer Circles</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="step-pill" style="cursor:pointer" onclick="showPage('peer',document.querySelector('[onclick*=peer]'))">
+            <div style="font-size:22px">🌸</div>
+            <div>
+              <div style="font-size:13px;font-weight:600">New Mothers Support</div>
+              <div style="font-size:11px;color:var(--text2)">12 members · 3 new messages</div>
+            </div>
+            <span class="dot" style="margin-left:auto"></span>
+          </div>
+          <div class="step-pill" style="cursor:pointer" onclick="showPage('peer',document.querySelector('[onclick*=peer]'))">
+            <div style="font-size:22px">🧓</div>
+            <div>
+              <div style="font-size:13px;font-weight:600">Elderly Wellness Circle</div>
+              <div style="font-size:11px;color:var(--text2)">24 members · Active now</div>
+            </div>
+          </div>
+          <div class="step-pill" style="cursor:pointer" onclick="showPage('peer',document.querySelector('[onclick*=peer]'))">
+            <div style="font-size:22px">🦽</div>
+            <div>
+              <div style="font-size:13px;font-weight:600">Disability & Dignity</div>
+              <div style="font-size:11px;color:var(--text2)">18 members · Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MOOD CHECK-IN ─────────────────────────────── -->
+  <div class="page" id="page-checkin">
+    <div class="section-title">Daily Mood Check-in</div>
+    <div class="section-sub">Multilingual emotional tracking powered by IndicBERT NLP — 10+ regional languages</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="orb-wrap">
+            <div class="orb" id="mainOrb"><div class="orb-emoji" id="orbEmoji">🤍</div></div>
+            <div class="orb-label">Your Wellness Pulse</div>
+            <div class="orb-mood" id="orbMood">Tap a mood to begin</div>
+          </div>
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text2)">How are you feeling today?</div>
+          <div class="mood-grid">
+            <div class="mood-btn" onclick="selectMood(1,'Distressed','😰','anxious')">
+              <span class="moji">😰</span><span class="mlabel">Distressed</span>
+            </div>
+            <div class="mood-btn" onclick="selectMood(2,'Low','😔','sad')">
+              <span class="moji">😔</span><span class="mlabel">Low</span>
+            </div>
+            <div class="mood-btn" onclick="selectMood(3,'Okay','😐','')">
+              <span class="moji">😐</span><span class="mlabel">Okay</span>
+            </div>
+            <div class="mood-btn" onclick="selectMood(4,'Good','🙂','happy')">
+              <span class="moji">🙂</span><span class="mlabel">Good</span>
+            </div>
+            <div class="mood-btn" onclick="selectMood(5,'Joyful','😊','happy')">
+              <span class="moji">😊</span><span class="mlabel">Joyful</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;margin-bottom:12px">Language Selection</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+            <span class="tag" style="cursor:pointer;border-color:var(--violet);color:var(--violet)" onclick="setActiveTag(this)">English</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">हिंदी</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">తెలుగు</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">தமிழ்</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">বাংলা</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">मराठी</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">ಕನ್ನಡ</span>
+            <span class="tag" style="cursor:pointer" onclick="setActiveTag(this)">മലയാളം</span>
+          </div>
+          <label class="input-label">Share what's on your mind (optional)</label>
+          <textarea class="textarea" id="journalInput" placeholder="You can write in any language above. Our AI understands all of them..."></textarea>
+          <div id="sentimentOutput" class="sentiment-out"></div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn btn-primary" onclick="analyzeJournal()" style="flex:1">Analyze with AI 🤖</button>
+            <button class="btn btn-ghost" onclick="submitCheckin()" id="submitBtn" disabled style="opacity:0.5">Submit Check-in</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div style="font-size:14px;font-weight:600;margin-bottom:16px">AI Risk Assessment</div>
+          <div id="riskMeterContainer">
+            <div class="risk-meter-wrap">
+              <div class="risk-track">
+                <div class="risk-thumb" id="riskThumb" style="left:28%"></div>
+              </div>
+              <div class="risk-labels"><span>Low</span><span>Medium</span><span>High</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:14px;background:var(--bg3);border-radius:10px">
+              <span style="font-size:24px" id="riskEmoji">✅</span>
+              <div>
+                <div style="font-size:13px;font-weight:600" id="riskStatus">Risk Level: Low</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:2px" id="riskMessage">Your wellness signals look good. Keep up the positive habits!</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Contributing factors tracked:</div>
+            <div style="display:flex;flex-direction:column;gap:6px" id="factorsList">
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+                <span>😴 Sleep quality</span><span style="color:var(--green);font-weight:600">Good</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+                <span>💬 Social activity</span><span style="color:var(--green);font-weight:600">Active</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+                <span>📱 App usage rhythm</span><span style="color:var(--amber);font-weight:600">Slightly Low</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+                <span>🗣️ Voice tone</span><span style="color:var(--green);font-weight:600">Calm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:14px;font-weight:600;margin-bottom:14px">Check-in History</div>
+          <div class="history-list" id="historyList">
+            <div class="history-item">
+              <div class="history-dot" style="background:var(--green)"></div>
+              <div class="history-text">Today — Calm, journaled about morning walk</div>
+              <div class="history-score" style="color:var(--green)">+8.2</div>
+              <div class="history-time">8:42 AM</div>
+            </div>
+            <div class="history-item">
+              <div class="history-dot" style="background:var(--amber)"></div>
+              <div class="history-text">Yesterday — Felt okay, slight fatigue</div>
+              <div class="history-score" style="color:var(--amber)">+5.1</div>
+              <div class="history-time">9:15 AM</div>
+            </div>
+            <div class="history-item">
+              <div class="history-dot" style="background:var(--teal)"></div>
+              <div class="history-text">2 days — Good, connected with family</div>
+              <div class="history-score" style="color:var(--teal)">+7.8</div>
+              <div class="history-time">8:00 AM</div>
+            </div>
+            <div class="history-item">
+              <div class="history-dot" style="background:var(--rose)"></div>
+              <div class="history-text">3 days — Anxious, work stress noted</div>
+              <div class="history-score" style="color:var(--rose)">-3.2</div>
+              <div class="history-time">10:30 AM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BIOMARKER ─────────────────────────────────── -->
+  <div class="page" id="page-biomarker">
+    <div class="section-title">Passive Wellness Signals</div>
+    <div class="section-sub">On-device behavioral biomarker analysis — all processing stays on your device, zero data transmitted</div>
+
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">Real-time Signal Dashboard</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Passive indicators detected in the last 24 hours</div>
+        <div class="bio-ring-wrap" id="bioRings">
+          <div class="bio-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+              <circle class="ring-bg" cx="50" cy="50" r="40"/>
+              <circle class="ring-val" id="ring1" cx="50" cy="50" r="40" stroke="#2DD4BF" stroke-dasharray="251" stroke-dashoffset="63"/>
+            </svg>
+            <div class="ring-text">
+              <div class="ring-num" style="color:var(--teal)" id="r1val">75</div>
+              <div class="ring-lbl">Typing<br>Rhythm</div>
+            </div>
+          </div>
+          <div class="bio-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+              <circle class="ring-bg" cx="50" cy="50" r="40"/>
+              <circle class="ring-val" id="ring2" cx="50" cy="50" r="40" stroke="#F59E0B" stroke-dasharray="251" stroke-dashoffset="100"/>
+            </svg>
+            <div class="ring-text">
+              <div class="ring-num" style="color:var(--amber)" id="r2val">60</div>
+              <div class="ring-lbl">App Usage<br>Pattern</div>
+            </div>
+          </div>
+          <div class="bio-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+              <circle class="ring-bg" cx="50" cy="50" r="40"/>
+              <circle class="ring-val" id="ring3" cx="50" cy="50" r="40" stroke="#8B5CF6" stroke-dasharray="251" stroke-dashoffset="38"/>
+            </svg>
+            <div class="ring-text">
+              <div class="ring-num" style="color:var(--violet)" id="r3val">85</div>
+              <div class="ring-lbl">Voice<br>Tone</div>
+            </div>
+          </div>
+          <div class="bio-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+              <circle class="ring-bg" cx="50" cy="50" r="40"/>
+              <circle class="ring-val" id="ring4" cx="50" cy="50" r="40" stroke="#10B981" stroke-dasharray="251" stroke-dashoffset="50"/>
+            </svg>
+            <div class="ring-text">
+              <div class="ring-num" style="color:var(--green)" id="r4val">80</div>
+              <div class="ring-lbl">Response<br>Speed</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="runBioScan()">🔄 Run Live Scan</button>
+      </div>
+
+      <div class="card">
+        <div style="font-size:14px;font-weight:600;margin-bottom:14px">Signal Interpretation</div>
+        <div id="bioInterpret" style="display:flex;flex-direction:column;gap:10px">
+          <div class="safe-tip">
+            <b style="color:var(--teal)">Typing Rhythm (75/100):</b> Your typing speed and pressure patterns are within the normal healthy range. No stress indicators detected.
+          </div>
+          <div class="safe-tip">
+            <b style="color:var(--amber)">App Usage (60/100):</b> Slight decrease in app engagement over the past 3 days. This can sometimes indicate low energy or withdrawal. Monitor for further changes.
+          </div>
+          <div class="safe-tip">
+            <b style="color:var(--violet)">Voice Tone (85/100):</b> Excellent. Your voice pitch, pace and energy are calm and consistent — a strong positive indicator.
+          </div>
+          <div class="safe-tip">
+            <b style="color:var(--green)">Response Speed (80/100):</b> Normal response latency. No signs of cognitive fatigue or slowed processing.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px;font-weight:600;margin-bottom:6px">Privacy First — How This Works</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:16px">All analysis is done on your device using TensorFlow Lite. No raw data ever leaves your phone.</div>
+      <div class="grid-4">
+        <div class="card-sm" style="text-align:center">
+          <div style="font-size:24px;margin-bottom:8px">📱</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">On-Device ML</div>
+          <div style="font-size:11px;color:var(--text2)">TensorFlow Lite processes all signals locally</div>
+        </div>
+        <div class="card-sm" style="text-align:center">
+          <div style="font-size:24px;margin-bottom:8px">🔒</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">Zero Upload</div>
+          <div style="font-size:11px;color:var(--text2)">Raw biometric data never leaves your device</div>
+        </div>
+        <div class="card-sm" style="text-align:center">
+          <div style="font-size:24px;margin-bottom:8px">🛑</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">Opt-Out Anytime</div>
+          <div style="font-size:11px;color:var(--text2)">Disable passive scanning from settings instantly</div>
+        </div>
+        <div class="card-sm" style="text-align:center">
+          <div style="font-size:24px;margin-bottom:8px">📡</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px">Works Offline</div>
+          <div style="font-size:11px;color:var(--text2)">Full functionality on 2G or no network</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PEER CIRCLES ─────────────────────────────── -->
+  <div class="page" id="page-peer">
+    <div class="section-title">Peer Support Circles</div>
+    <div class="section-sub">Safe, moderated communities. Anonymous by default. AI monitors for harmful content 24/7.</div>
+
+    <div class="tabs" id="peerTabs">
+      <div class="tab active" onclick="switchTab('peerTabs',this,'circle-mothers')">🌸 New Mothers</div>
+      <div class="tab" onclick="switchTab('peerTabs',this,'circle-elderly')">🧓 Elderly Wellness</div>
+      <div class="tab" onclick="switchTab('peerTabs',this,'circle-disability')">🦽 Disability & Dignity</div>
+    </div>
+
+    <!-- Mothers -->
+    <div id="circle-mothers">
+      <div class="compose-box">
+        <h4>Share anonymously with New Mothers Circle</h4>
+        <textarea class="textarea" id="postInput" placeholder="Share your experience, ask for support, or offer encouragement..." style="min-height:70px"></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <select class="input" style="width:auto;font-size:12px;padding:8px 12px">
+            <option>🙋 Seeking support</option>
+            <option>💬 Sharing experience</option>
+            <option>💡 Offering advice</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="submitPost()" style="margin-left:auto">Post Anonymously</button>
+        </div>
+      </div>
+
+      <div id="postsFeed">
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-avatar" style="background:linear-gradient(135deg,#E8637A,#9D174D)">A</div>
+            <div>
+              <div class="post-user">Anonymous Sister 🌸</div>
+              <div class="post-time">2 hours ago · New Mothers Circle</div>
+            </div>
+            <span class="post-tag" style="background:var(--rose-dim);color:var(--rose);border:1px solid rgba(232,99,122,0.3)">Seeking Support</span>
+          </div>
+          <div class="post-body">I had my baby 6 weeks ago and I've been feeling so disconnected from everything. I don't feel the joy everyone said I would. My family thinks I should just be happy. Has anyone else felt this way? I feel so ashamed to say this out loud...</div>
+          <div class="post-actions">
+            <button class="post-btn" onclick="likePost(this)">❤️ <span>12</span></button>
+            <button class="post-btn" onclick="replyPost(this)">💬 Reply</button>
+            <button class="post-btn">🤝 I felt this too</button>
+          </div>
+        </div>
+
+        <div class="post-card" style="margin-left:24px;border-left:2px solid var(--violet)">
+          <div class="post-header">
+            <div class="post-avatar" style="background:linear-gradient(135deg,var(--teal),#0891B2);font-size:11px">AI</div>
+            <div>
+              <div class="post-user">Silent Struggles Support AI</div>
+              <div class="post-time">2 hours ago · Automated Response</div>
+            </div>
+            <span class="post-tag" style="background:var(--violet-dim);color:var(--violet)">AI Support</span>
+          </div>
+          <div class="post-body">What you're describing sounds like it could be postpartum depression (PPD), which affects 1 in 5 mothers in India. <b>You are not alone, and you have nothing to be ashamed of.</b> PPD is a medical condition — not a failure of love. Please consider speaking with a doctor. iCall (9152987821) has counselors who specialize in postpartum support. You can also explore our PPD lesson in the Learn section 💜</div>
+          <div class="post-actions">
+            <button class="post-btn liked">💜 <span>34</span></button>
+            <button class="post-btn">📌 Save Resource</button>
+          </div>
+        </div>
+
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-avatar" style="background:linear-gradient(135deg,#34D399,#065F46)">R</div>
+            <div>
+              <div class="post-user">Recovered Mama 💚</div>
+              <div class="post-time">1 hour ago · New Mothers Circle</div>
+            </div>
+            <span class="post-tag" style="background:var(--green-dim);color:var(--green)">Sharing Experience</span>
+          </div>
+          <div class="post-body">Sister, I felt exactly the same 2 years ago. It took me 3 months to realize I had PPD. I went to a counselor through iCall and it changed my life. That disconnected feeling is your brain telling you it needs support — not that you're a bad mother. You reached out here and that took courage. 🌱</div>
+          <div class="post-actions">
+            <button class="post-btn" onclick="likePost(this)">❤️ <span>28</span></button>
+            <button class="post-btn" onclick="replyPost(this)">💬 Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elderly -->
+    <div id="circle-elderly" style="display:none">
+      <div class="compose-box">
+        <h4>Share with the Elderly Wellness Circle</h4>
+        <textarea class="textarea" placeholder="Your words matter here..." style="min-height:70px"></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn btn-primary btn-sm" onclick="alert('Message shared with the Elderly Wellness Circle! 🧓💙')" style="margin-left:auto">Share Anonymously</button>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="post-avatar" style="background:linear-gradient(135deg,var(--amber),#92400E)">G</div>
+          <div>
+            <div class="post-user">Grandfather S. 🌄</div>
+            <div class="post-time">3 hours ago</div>
+          </div>
+          <span class="post-tag" style="background:var(--amber-dim);color:var(--amber)">Sharing</span>
+        </div>
+        <div class="post-body">My children all moved to the city. I speak to them on video call but it's not the same. The silence in the house after 50 years of noise from a full family is very hard. I didn't think old age would feel this empty. I'm glad this group exists to talk.</div>
+        <div class="post-actions">
+          <button class="post-btn" onclick="likePost(this)">❤️ <span>45</span></button>
+          <button class="post-btn">💬 Reply</button>
+          <button class="post-btn">🤝 I understand</button>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="post-avatar" style="background:linear-gradient(135deg,var(--teal),#0891B2);font-size:11px">AI</div>
+          <div><div class="post-user">Silent Struggles Support AI</div><div class="post-time">3 hours ago</div></div>
+          <span class="post-tag" style="background:var(--violet-dim);color:var(--violet)">AI Support</span>
+        </div>
+        <div class="post-body">The loneliness you describe — called "late-life loneliness" — is one of India's most underreported health crises. It has the same health impact as smoking 15 cigarettes a day. <b>This feeling is valid and it deserves care, not silence.</b> NIMHANS has a dedicated elderly mental health program. Would you like help connecting? iCall: 9152987821 🙏</div>
+        <div class="post-actions"><button class="post-btn liked">💜 <span>62</span></button></div>
+      </div>
+    </div>
+
+    <!-- Disability -->
+    <div id="circle-disability" style="display:none">
+      <div class="compose-box">
+        <h4>Share with Disability & Dignity Circle</h4>
+        <textarea class="textarea" placeholder="Share your story, your strength, your struggle..." style="min-height:70px"></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn btn-primary btn-sm" onclick="alert('Message shared with the Disability & Dignity Circle! 🦽💙')" style="margin-left:auto">Post Anonymously</button>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="post-header">
+          <div class="post-avatar" style="background:linear-gradient(135deg,var(--violet),#4C1D95)">D</div>
+          <div><div class="post-user">Divyangjan Warrior ✊</div><div class="post-time">5 hours ago</div></div>
+          <span class="post-tag" style="background:var(--violet-dim);color:var(--violet)">Advocacy</span>
+        </div>
+        <div class="post-body">I went to a government mental health clinic last month. The building had no ramp. The forms were only in English. The doctor spoke to my sister — not to me. We need spaces that actually see us as whole people, not as conditions to manage. This app is the first thing that has ever asked ME how I feel.</div>
+        <div class="post-actions">
+          <button class="post-btn" onclick="likePost(this)">❤️ <span>87</span></button>
+          <button class="post-btn">💬 Reply</button>
+          <button class="post-btn">🤝 Solidarity</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LITERACY ────────────────────────────────── -->
+  <div class="page" id="page-literacy">
+    <div class="section-title">Learn & Grow</div>
+    <div class="section-sub">Gamified mental health literacy — reduce stigma, recognize symptoms, know when to seek help</div>
+
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+      <div class="card-sm" style="flex:1;display:flex;align-items:center;gap:14px">
+        <div style="font-size:32px">⭐</div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:var(--amber)">240 XP</div>
+          <div style="font-size:12px;color:var(--text2)">Total Experience Points</div>
+        </div>
+      </div>
+      <div class="card-sm" style="flex:1;display:flex;align-items:center;gap:14px">
+        <div style="font-size:32px">🎓</div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:var(--teal)">3/8</div>
+          <div style="font-size:12px;color:var(--text2)">Lessons Completed</div>
+        </div>
+      </div>
+      <div class="card-sm" style="flex:1;display:flex;align-items:center;gap:14px">
+        <div style="font-size:32px">🏅</div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:var(--violet)">Learner</div>
+          <div style="font-size:12px;color:var(--text2)">Current Badge</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="lessonGrid" class="grid-3">
+      <div class="lesson-card done" onclick="openLesson('anxiety')">
+        <div class="lesson-icon">😰</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">Understanding Anxiety</div>
+          <span class="xp-badge">+30 XP</span>
+        </div>
+        <div class="lesson-desc">Learn what anxiety really is, why it happens, and simple tools to calm your nervous system.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:100%"></div></div>
+        <div style="font-size:11px;color:var(--green);margin-top:6px;font-weight:600">✅ Completed</div>
+      </div>
+      <div class="lesson-card done" onclick="openLesson('depression')">
+        <div class="lesson-icon">🌧️</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">Recognizing Depression</div>
+          <span class="xp-badge">+40 XP</span>
+        </div>
+        <div class="lesson-desc">Symptoms, myths, and how depression differs from sadness — in plain language.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:100%"></div></div>
+        <div style="font-size:11px;color:var(--green);margin-top:6px;font-weight:600">✅ Completed</div>
+      </div>
+      <div class="lesson-card done" onclick="openLesson('ppd')">
+        <div class="lesson-icon">🌸</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">Postpartum Depression</div>
+          <span class="xp-badge">+40 XP</span>
+        </div>
+        <div class="lesson-desc">A gentle guide for new mothers and their families — breaking the silence around PPD.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:100%"></div></div>
+        <div style="font-size:11px;color:var(--green);margin-top:6px;font-weight:600">✅ Completed</div>
+      </div>
+      <div class="lesson-card" onclick="openLesson('stigma')">
+        <div class="lesson-icon">🚫</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">Breaking the Stigma</div>
+          <span class="xp-badge">+35 XP</span>
+        </div>
+        <div class="lesson-desc">Why mental health stigma exists in India and how we can challenge it together.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:45%"></div></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">In progress — 45%</div>
+      </div>
+      <div class="lesson-card" onclick="openLesson('elderly')">
+        <div class="lesson-icon">🧓</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">Mental Health in Old Age</div>
+          <span class="xp-badge">+30 XP</span>
+        </div>
+        <div class="lesson-desc">Loneliness, grief, and cognitive health — the invisible struggles of India's elderly.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:0%"></div></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">Not started</div>
+      </div>
+      <div class="lesson-card" onclick="openLesson('seekhelp')">
+        <div class="lesson-icon">🆘</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div class="lesson-title">When to Seek Help</div>
+          <span class="xp-badge">+50 XP</span>
+        </div>
+        <div class="lesson-desc">Recognizing crisis signs and exactly how to access professional support in India.</div>
+        <div class="lesson-progress"><div class="lesson-fill" style="width:0%"></div></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">Not started</div>
+      </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizPanel" style="display:none;margin-top:24px">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <div style="font-size:16px;font-weight:700" id="quizTitle">Quiz</div>
+          <button class="btn btn-ghost btn-sm" onclick="closeQuiz()">✕ Close</button>
+        </div>
+        <div id="quizContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CRISIS SUPPORT ─────────────────────────── -->
+  <div class="page" id="page-crisis">
+    <div style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(139,92,246,0.1));border:1px solid rgba(239,68,68,0.2);border-radius:var(--r2);padding:24px;margin-bottom:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--rose);letter-spacing:1px;margin-bottom:8px">CRISIS SUPPORT</div>
+      <div class="section-title" style="margin-bottom:8px;font-size:28px">You are not alone. 💜</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7">If you're in distress right now, please reach out immediately. These helplines are free, confidential, and available 24/7. Real people who understand are waiting to help you.</div>
+    </div>
+
+    <div class="crisis-grid" style="margin-bottom:24px">
+      <div class="helpline-card" style="border-color:rgba(45,212,191,0.3)">
+        <div style="font-size:22px">📞</div>
+        <div class="helpline-name">iCall — TISS Mumbai</div>
+        <div class="helpline-number">9152987821</div>
+        <div class="helpline-desc">Professional counsellors, Mon–Sat 8AM–10PM. Offers counselling in Hindi, English, and regional languages. Sliding-scale fees.</div>
+        <button class="btn btn-teal btn-sm" onclick="alert('📞 Calling iCall...\n\nReal number: 9152987821\nAvailable: Mon-Sat, 8AM-10PM\n\nA trained counsellor will answer. You can speak in any Indian language. 💙')">Call Now</button>
+      </div>
+      <div class="helpline-card" style="border-color:rgba(232,99,122,0.3)">
+        <div style="font-size:22px">🆘</div>
+        <div class="helpline-name">Vandrevala Foundation</div>
+        <div class="helpline-number">1860-2662-345</div>
+        <div class="helpline-desc">24/7 crisis support. Free of charge. Multi-lingual counsellors. Specifically serves those unable to afford private therapy.</div>
+        <button class="btn btn-rose btn-sm" onclick="alert('📞 Calling Vandrevala Foundation...\n\nReal number: 1860-2662-345\nAvailable: 24/7\n\nFree, confidential, and compassionate. 💜')">Call Now</button>
+      </div>
+      <div class="helpline-card" style="border-color:rgba(139,92,246,0.3)">
+        <div style="font-size:22px">🏥</div>
+        <div class="helpline-name">NIMHANS Bangalore</div>
+        <div class="helpline-number">080-46110007</div>
+        <div class="helpline-desc">India's premier mental health institution. Offers free outpatient consultations, crisis intervention, and telepsychiatry services.</div>
+        <button class="btn btn-ghost btn-sm" onclick="alert('🏥 NIMHANS Helpline\n\nReal number: 080-46110007\nLocation: Bangalore (serves all of India via tele)\n\nIndia\'s best mental health institution. 💙')">Contact</button>
+      </div>
+      <div class="helpline-card" style="border-color:rgba(245,158,11,0.3)">
+        <div style="font-size:22px">💬</div>
+        <div class="helpline-name">SNEHI — WhatsApp</div>
+        <div class="helpline-number">+91-22-2772-6771</div>
+        <div class="helpline-desc">If you can't speak, text-based support via WhatsApp and email. Especially helpful for those with speech/hearing disabilities.</div>
+        <button class="btn btn-ghost btn-sm" onclick="alert('💬 SNEHI Text Support\n\nWhatsApp: +91-22-2772-6771\nEmail: help@snehi.org\n\nPerfect if you cannot speak. Type in any language. 💜')">Message</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div style="font-size:14px;font-weight:600;margin-bottom:14px">If you're feeling overwhelmed right now, try this first:</div>
+      <div class="safe-tip">🌬️ <b>5-4-3-2-1 Grounding:</b> Name 5 things you can see. 4 you can touch. 3 you can hear. 2 you can smell. 1 you can taste. This brings your nervous system back to safety.</div>
+      <div class="safe-tip">💧 <b>Drink water slowly.</b> Cold water activates the vagus nerve and can reduce a panic response within 60 seconds.</div>
+      <div class="safe-tip">📱 <b>Text someone you trust.</b> You don't have to explain everything. "I'm having a hard time right now" is enough.</div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px;font-weight:600;margin-bottom:14px">Find Nearest Mental Health Facility</div>
+      <div style="display:flex;gap:10px;margin-bottom:16px">
+        <input class="input" id="cityInput" placeholder="Enter your city or district..." style="flex:1"/>
+        <button class="btn btn-primary" onclick="findFacilities()">🔍 Find</button>
+      </div>
+      <div id="facilityResults" style="display:none">
+        <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px" id="facilityCity"></div>
+        <div id="facilityList" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROFILE ─────────────────────────────────── -->
+  <div class="page" id="page-profile">
+    <div class="section-title">My Profile</div>
+    <div class="section-sub">Manage your wellness journey and privacy settings</div>
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:20px;text-align:center">
+          <div class="profile-avatar-lg" style="margin:0 auto 12px">👩</div>
+          <div style="font-size:18px;font-weight:700">Priya S.</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Anonymous ID: SS-7429-F</div>
+          <div class="tag-group" style="justify-content:center">
+            <span class="tag" style="color:var(--rose);border-color:var(--rose)">Women's Group</span>
+            <span class="tag" style="color:var(--teal);border-color:var(--teal)">New Mothers</span>
+            <span class="tag">Telugu Speaker</span>
+            <span class="tag">Andhra Pradesh</span>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:20px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px">Identity & Accessibility</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div>
+              <label class="input-label">Preferred Language</label>
+              <select class="input">
+                <option>Telugu (తెలుగు)</option>
+                <option selected>English</option>
+                <option>Hindi (हिंदी)</option>
+                <option>Tamil (தமிழ்)</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label">Group Identity</label>
+              <select class="input">
+                <option selected>Woman</option>
+                <option>Elderly (60+)</option>
+                <option>Disabled / Divyangjan</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label">Accessibility Needs</label>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+                  <input type="checkbox" style="accent-color:var(--violet)"/> Voice-first mode (screen reader)
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+                  <input type="checkbox" checked style="accent-color:var(--violet)"/> High contrast text
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+                  <input type="checkbox" style="accent-color:var(--violet)"/> Large text mode
+                </label>
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+                  <input type="checkbox" style="accent-color:var(--violet)"/> Reduce motion
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="alert('✅ Settings saved! Your preferences will apply across the app.')">Save Preferences</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px">Wellness Summary</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="step-pill">
+              <span style="font-size:20px">🔥</span>
+              <div>
+                <div style="font-size:13px;font-weight:600">7-Day Check-in Streak</div>
+                <div style="font-size:11px;color:var(--text2)">Consistency is the foundation of mental wellness</div>
+              </div>
+              <span style="margin-left:auto;font-size:11px;color:var(--amber);font-weight:600">+70 XP</span>
+            </div>
+            <div class="step-pill">
+              <span style="font-size:20px">🎓</span>
+              <div>
+                <div style="font-size:13px;font-weight:600">3 Lessons Completed</div>
+                <div style="font-size:11px;color:var(--text2)">Anxiety, Depression, Postpartum Depression</div>
+              </div>
+              <span style="margin-left:auto;font-size:11px;color:var(--amber);font-weight:600">+110 XP</span>
+            </div>
+            <div class="step-pill">
+              <span style="font-size:20px">🤝</span>
+              <div>
+                <div style="font-size:13px;font-weight:600">Active in 1 Peer Circle</div>
+                <div style="font-size:11px;color:var(--text2)">New Mothers Support</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:20px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:14px">Privacy & Data Control</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg3);border-radius:10px">
+              <div style="font-size:13px">📊 Passive biomarker analysis</div>
+              <div style="position:relative;width:44px;height:24px;background:var(--violet);border-radius:12px;cursor:pointer" onclick="toggleSwitch(this)"><div style="position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:left .2s;left:23px"></div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg3);border-radius:10px">
+              <div style="font-size:13px">🎙️ Voice tone analysis</div>
+              <div style="position:relative;width:44px;height:24px;background:var(--violet);border-radius:12px;cursor:pointer" onclick="toggleSwitch(this)"><div style="position:absolute;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:left .2s;left:23px"></div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg3);border-radius:10px">
+              <div style="font-size:13px">📍 Location (for facility finder)</div>
+              <div style="position:relative;width:44px;height:24px;background:var(--bg2);border-radius:12px;cursor:pointer;border:1px solid var(--border2)" onclick="toggleSwitch(this)"><div style="position:absolute;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:left .2s;left:3px"></div></div>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:12px;color:var(--rose);border-color:rgba(232,99,122,0.3)" onclick="alert('Your data deletion request has been submitted. All data will be permanently deleted within 48 hours. This cannot be undone.')">🗑️ Delete All My Data</button>
+        </div>
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;margin-bottom:10px">ABHA Integration</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">Link your Ayushman Bharat Health Account to sync your mental wellness data with your government health record for continuity of care.</div>
+          <input class="input" placeholder="Enter ABHA Number (14-digit)" style="margin-bottom:10px"/>
+          <button class="btn btn-teal btn-sm" style="width:100%" onclick="alert('🔗 ABHA Integration\n\nThis would connect to the Ayushman Bharat Digital Health Mission API.\n\nYour mental wellness summary will be securely shared with your health record for continuity of care. 💙')">Link ABHA Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+// ── NLP SENTIMENT ENGINE ──────────────────────────────────────────
+const sentimentEngine = {
+  positive: ['happy','good','great','wonderful','calm','peaceful','grateful','hopeful','better','joy','love','excited','relieved','strong','confident','blessed','positive','smile','laugh','fine','okay','well'],
+  negative: ['sad','anxious','depressed','scared','afraid','lonely','hopeless','worthless','tired','exhausted','angry','frustrated','worried','stress','panic','cry','hurt','pain','lost','broken','empty','dark','afraid','terrible','awful','overwhelmed','numb','suicidal','die','end'],
+  crisis: ['suicidal','kill myself','end it','no reason to live','want to die','cant go on'],
+  hindiPos:['खुश','अच्छा','शांत','प्यार','उम्मीद'],
+  hindiNeg:['दुखी','डरा','थका','परेशान','अकेला'],
+
+  analyze(text) {
+    const t = text.toLowerCase();
+    let posScore = 0, negScore = 0, foundWords = [], isCrisis = false;
+    this.positive.forEach(w => { if(t.includes(w)){posScore++;foundWords.push({w,type:'pos'})}});
+    this.negative.forEach(w => { if(t.includes(w)){negScore+=2;foundWords.push({w,type:'neg'})}});
+    this.crisis.forEach(p => { if(t.includes(p)) isCrisis = true;});
+    const total = posScore + negScore;
+    const score = total === 0 ? 50 : Math.round((posScore / (total)) * 100);
+    let label, color, riskPct;
+    if(isCrisis){ label='Crisis Detected'; color='var(--rose)'; riskPct=92; }
+    else if(score >= 65){ label='Positive'; color='var(--green)'; riskPct=15; }
+    else if(score >= 40){ label='Neutral / Mixed'; color='var(--violet)'; riskPct=35; }
+    else if(score >= 20){ label='Distressed'; color='var(--amber)'; riskPct=60; }
+    else { label='High Distress'; color='var(--rose)'; riskPct=80; }
+    return { score, label, color, foundWords, isCrisis, riskPct, posScore, negScore };
+  }
+};
+
+// ── MOOD STATE ────────────────────────────────────────────────────
+let currentMood = null;
+let currentRisk = 28;
+
+function selectMood(level, name, emoji, orbClass) {
+  currentMood = level;
+  document.querySelectorAll('.mood-btn').forEach((b,i) => {
+    b.className = 'mood-btn' + (i === level-1 ? ` sel-${level}` : '');
+  });
+  const orb = document.getElementById('mainOrb');
+  orb.className = 'orb' + (orbClass ? ' '+orbClass : '');
+  document.getElementById('orbEmoji').textContent = emoji;
+  document.getElementById('orbMood').textContent = name;
+  const riskMap = {1:78, 2:55, 3:30, 4:18, 5:10};
+  updateRisk(riskMap[level]);
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').style.opacity = '1';
+}
+
+function updateRisk(pct) {
+  currentRisk = pct;
+  document.getElementById('riskThumb').style.left = pct + '%';
+  document.getElementById('sideRiskBar').style.width = pct + '%';
+  let status, msg, color, emoji;
+  if(pct >= 70){ status='Risk Level: HIGH'; msg='Significant distress signals detected. Please consider reaching out for professional support.'; color='var(--rose)'; emoji='🚨';
+    document.getElementById('sideRiskBar').style.background='linear-gradient(90deg,#F59E0B,#EF4444)';
+    document.getElementById('sideRiskLevel').style.color='var(--rose)';
+    document.getElementById('sideRiskLevel').textContent='High Risk ⚠';
+    document.getElementById('crisisBanner').classList.add('visible');
+  } else if(pct >= 45){ status='Risk Level: MEDIUM'; msg='Some signs of distress noted. Self-care resources have been suggested. Monitor your wellbeing closely.'; color='var(--amber)'; emoji='⚠️';
+    document.getElementById('sideRiskBar').style.background='linear-gradient(90deg,#10B981,#F59E0B)';
+    document.getElementById('sideRiskLevel').style.color='var(--amber)';
+    document.getElementById('sideRiskLevel').textContent='Medium Risk';
+    document.getElementById('crisisBanner').classList.remove('visible');
+  } else { status='Risk Level: LOW'; msg='Your wellness signals look good. Keep up the positive habits and self-care routine!'; color='var(--green)'; emoji='✅';
+    document.getElementById('sideRiskBar').style.background='linear-gradient(90deg,#10B981,#3B82F6)';
+    document.getElementById('sideRiskLevel').style.color='var(--green)';
+    document.getElementById('sideRiskLevel').textContent='Low Risk ✓';
+    document.getElementById('crisisBanner').classList.remove('visible');
+  }
+  document.getElementById('riskEmoji').textContent = emoji;
+  document.getElementById('riskStatus').textContent = status;
+  document.getElementById('riskStatus').style.color = color;
+  document.getElementById('riskMessage').textContent = msg;
+}
+
+function analyzeJournal() {
+  const text = document.getElementById('journalInput').value.trim();
+  if(!text){ alert('Please write something in the journal first 💬'); return; }
+  const result = sentimentEngine.analyze(text);
+  const out = document.getElementById('sentimentOutput');
+  let wordsHtml = result.foundWords.map(fw => `<span class="sent-word ${fw.type}">${fw.w}</span>`).join('') || '<span class="sent-word neu">neutral language detected</span>';
+  out.innerHTML = `<div class="sent-score">🤖 AI Analysis: <span style="color:${result.color};font-weight:700">${result.label}</span> (Wellness Score: ${result.score}/100)</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Detected emotional indicators:</div>
+    <div class="sent-words">${wordsHtml}</div>
+    ${result.isCrisis ? `<div style="margin-top:12px;padding:12px;background:var(--rose-dim);border:1px solid var(--rose);border-radius:10px;font-size:13px;color:var(--rose);font-weight:600">⚠️ Crisis language detected. Please call iCall: <b>9152987821</b> right now. You matter. 💜</div>` : ''}`;
+  out.classList.add('show');
+  updateRisk(result.riskPct);
+  document.getElementById('submitBtn').disabled = !currentMood;
+  if(currentMood) document.getElementById('submitBtn').style.opacity = '1';
+}
+
+function submitCheckin() {
+  if(!currentMood) return;
+  const moodNames = ['Distressed','Low','Okay','Good','Joyful'];
+  const colors = ['var(--rose)','var(--amber)','var(--violet)','var(--teal)','var(--green)'];
+  const emojis = ['😰','😔','😐','🙂','😊'];
+  const name = moodNames[currentMood-1];
+  const color = colors[currentMood-1];
+  const list = document.getElementById('historyList');
+  const now = new Date();
+  const timeStr = now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
+  const item = document.createElement('div');
+  item.className = 'history-item';
+  item.innerHTML = `<div class="history-dot" style="background:${color}"></div><div class="history-text">Just now — ${name} ${emojis[currentMood-1]}</div><div class="history-score" style="color:${color}">${currentMood >= 3 ? '+' : '-'}${(Math.random()*5+3).toFixed(1)}</div><div class="history-time">${timeStr}</div>`;
+  list.insertBefore(item, list.firstChild);
+  alert(`✅ Check-in saved!\n\nMood: ${name} ${emojis[currentMood-1]}\nRisk Level: ${currentRisk < 45 ? 'Low ✓' : currentRisk < 70 ? 'Medium ⚠️' : 'High 🚨'}\n\n${currentRisk >= 70 ? '🆘 We recommend speaking with a counsellor. iCall: 9152987821' : currentRisk >= 45 ? '💙 Try our breathing exercise in the dashboard.' : '🌱 Keep it up! You\'re doing great.'}`);
+}
+
+// ── BIOMARKER SCAN ────────────────────────────────────────────────
+function runBioScan() {
+  const rings = [
+    {id:'ring1', valId:'r1val', color:'#2DD4BF'},
+    {id:'ring2', valId:'r2val', color:'#F59E0B'},
+    {id:'ring3', valId:'r3val', color:'#8B5CF6'},
+    {id:'ring4', valId:'r4val', color:'#10B981'},
+  ];
+  rings.forEach(r => {
+    const val = Math.floor(Math.random()*40)+50;
+    const offset = 251 - (251 * val / 100);
+    document.getElementById(r.id).style.strokeDashoffset = offset;
+    document.getElementById(r.valId).textContent = val;
+  });
+  const vals = rings.map(r => parseInt(document.getElementById(r.valId).textContent));
+  const avg = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+  const interp = document.getElementById('bioInterpret');
+  const labels = ['Typing Rhythm','App Usage','Voice Tone','Response Speed'];
+  const colors = ['var(--teal)','var(--amber)','var(--violet)','var(--green)'];
+  interp.innerHTML = vals.map((v,i) => {
+    let insight = v >= 75 ? 'Within the healthy normal range. No stress indicators detected.' : v >= 55 ? 'Slightly below baseline. May indicate mild fatigue or emotional load. Monitor for changes.' : 'Notably lower than your baseline. This may signal increased emotional distress. Consider a check-in.';
+    return `<div class="safe-tip"><b style="color:${colors[i]}">${labels[i]} (${v}/100):</b> ${insight}</div>`;
+  }).join('');
+  alert(`🔍 Live Scan Complete!\n\nAverage Wellness Signal: ${avg}/100\n${avg >= 70 ? '✅ Signals are healthy. Keep it up!' : avg >= 55 ? '⚠️ Some signals are lower than usual. Monitor your wellbeing.' : '🚨 Multiple low signals detected. Please do a mood check-in and consider calling a counsellor.'}`);
+}
+
+// ── PEER COMMUNITY ────────────────────────────────────────────────
+function likePost(btn) {
+  const span = btn.querySelector('span');
+  if(btn.classList.contains('liked')){ btn.classList.remove('liked'); span.textContent = parseInt(span.textContent)-1; }
+  else { btn.classList.add('liked'); span.textContent = parseInt(span.textContent)+1; }
+}
+
+function replyPost(btn) {
+  const reply = prompt('💬 Reply anonymously to this post:');
+  if(reply && reply.trim()) {
+    const post = btn.closest('.post-card');
+    const replyCard = document.createElement('div');
+    replyCard.className = 'post-card';
+    replyCard.style.marginLeft = '24px';
+    replyCard.style.borderLeft = '2px solid var(--teal)';
+    replyCard.innerHTML = `<div class="post-header"><div class="post-avatar" style="background:linear-gradient(135deg,var(--teal),#0891B2)">Y</div><div><div class="post-user">You (Anonymous)</div><div class="post-time">Just now</div></div></div><div class="post-body">${reply}</div><div class="post-actions"><button class="post-btn" onclick="likePost(this)">❤️ <span>0</span></button></div>`;
+    post.insertAdjacentElement('afterend', replyCard);
+  }
+}
+
+function submitPost() {
+  const text = document.getElementById('postInput').value.trim();
+  if(!text){ alert('Please write something to share 💬'); return; }
+  const result = sentimentEngine.analyze(text);
+  if(result.isCrisis){
+    alert('⚠️ Our AI noticed this post may contain crisis language.\n\nBefore posting, please know:\n\n📞 iCall: 9152987821\n📞 Vandrevala: 1860-2662-345\n\nYou can still post — but please reach out to a counsellor too. 💜');
+  }
+  const feed = document.getElementById('postsFeed');
+  const card = document.createElement('div');
+  card.className = 'post-card';
+  card.innerHTML = `<div class="post-header"><div class="post-avatar" style="background:linear-gradient(135deg,var(--violet),#4C1D95)">P</div><div><div class="post-user">Priya (You)</div><div class="post-time">Just now</div></div><span class="post-tag" style="background:var(--violet-dim);color:var(--violet)">Your Post</span></div><div class="post-body">${text}</div><div class="post-actions"><button class="post-btn" onclick="likePost(this)">❤️ <span>0</span></button><button class="post-btn" onclick="replyPost(this)">💬 Reply</button></div>`;
+  feed.insertBefore(card, feed.firstChild);
+  document.getElementById('postInput').value = '';
+  alert('✅ Posted anonymously! The AI moderation system reviewed your post and it looks safe to share. 💜');
+}
+
+// ── LITERACY / QUIZ ────────────────────────────────────────────────
+const quizzes = {
+  stigma: {
+    title: 'Breaking the Stigma Quiz',
+    q: 'Someone tells you "mental illness is just weakness." What is the BEST response?',
+    opts: [
+      'Agree — people should just be stronger',
+      'Avoid the topic to keep peace',
+      'Mental illness is a medical condition, just like diabetes — it\'s about brain chemistry, not character',
+      'Only people from cities get mental illness'
+    ],
+    correct: 2,
+    explanation: 'Mental illness has biological, psychological, and social causes — just like any physical illness. The brain is an organ. When it struggles, it needs care — not judgment. Saying "just be strong" to someone with depression is like saying "just breathe properly" to someone with asthma.'
+  },
+  anxiety: {
+    title: 'Understanding Anxiety Quiz',
+    q: 'You have been feeling a racing heart, sweating, and can\'t stop worrying for 3 weeks. This is MOST likely:',
+    opts: [
+      'Normal nervousness that will pass',
+      'A sign of weakness',
+      'Generalized Anxiety Disorder — a real medical condition that responds well to treatment',
+      'Something you should hide from your family'
+    ],
+    correct: 2,
+    explanation: 'When anxiety symptoms last 6+ days and interfere with daily life, it meets clinical criteria for GAD. This is one of the most treatable mental health conditions — 80% of people improve significantly with therapy or medication. Hiding it only makes it worse.'
+  },
+  depression: {
+    title: 'Depression Quiz',
+    q: 'Which of these is NOT a symptom of depression?',
+    opts: [
+      'Losing interest in things you used to enjoy',
+      'Feeling sad most of the day',
+      'Feeling too happy and energetic to sleep',
+      'Changes in appetite and sleep'
+    ],
+    correct: 2,
+    explanation: 'Feeling extremely happy and energetic with reduced need for sleep is actually a symptom of MANIA or HYPOMANIA (part of bipolar disorder) — not depression. Depression involves persistent low mood, loss of interest, fatigue, and cognitive changes.'
+  },
+  ppd: {
+    title: 'Postpartum Depression Quiz',
+    q: 'What percentage of new mothers in India experience postpartum depression?',
+    opts: ['1 in 50 (2%)', '1 in 20 (5%)', '1 in 5 (20%)', 'It is very rare — less than 1%'],
+    correct: 2,
+    explanation: 'Postpartum depression affects approximately 1 in 5 (20%) of new mothers in India — yet it is vastly underdiagnosed because of stigma and lack of awareness. It is NOT "baby blues" (which lasts only 2 weeks). PPD can last months and requires professional support.'
+  },
+  seekhelp: {
+    title: 'When to Seek Help Quiz',
+    q: 'You notice your elderly parent has stopped eating properly, sleeps most of the day, and says "what\'s the point of anything." You should:',
+    opts: [
+      'Tell them to cheer up — old age is like that',
+      'Ignore it — they\'ll get better on their own',
+      'Take this seriously, speak with them openly, and contact a mental health professional',
+      'Only worry if they mention self-harm'
+    ],
+    correct: 2,
+    explanation: 'These are classic warning signs of depression in the elderly. Waiting for explicit self-harm statements is dangerous — late-stage suicidal ideation in elderly often happens without warning. Early intervention dramatically improves outcomes. Contact NIMHANS or iCall for guidance on how to help.'
+  },
+  elderly: {
+    title: 'Mental Health in Old Age Quiz',
+    q: 'Social isolation in the elderly has the same health impact as:',
+    opts: ['Missing one meal a day', 'Mild dehydration', 'Smoking 15 cigarettes a day', 'Skipping exercise occasionally'],
+    correct: 2,
+    explanation: 'Groundbreaking research (Holt-Lunstad, 2015) shows that chronic social isolation has health effects equivalent to smoking 15 cigarettes a day — increasing mortality risk by 29%. This is why India\'s elderly mental health crisis is a genuine public health emergency, not just a lifestyle issue.'
+  }
+};
+
+function openLesson(id) {
+  const quiz = quizzes[id];
+  if(!quiz) { alert('This lesson content is coming soon! 📚'); return; }
+  const panel = document.getElementById('quizPanel');
+  document.getElementById('quizTitle').textContent = quiz.title;
+  document.getElementById('quizContent').innerHTML = `
+    <div style="background:var(--bg3);border-radius:10px;padding:16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.7">
+      📖 <b style="color:var(--text)">Lesson Context:</b> ${quiz.explanation}
+    </div>
+    <div class="quiz-q">${quiz.q}</div>
+    <div class="quiz-opts">
+      ${quiz.opts.map((o,i) => `<div class="quiz-opt" onclick="checkAnswer(this,${i},${quiz.correct},'${id}')">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+    </div>
+    <div id="quizFeedback" class="quiz-feedback"></div>`;
+  panel.style.display = 'block';
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function checkAnswer(el, chosen, correct, id) {
+  document.querySelectorAll('.quiz-opt').forEach(o => o.style.pointerEvents='none');
+  el.classList.add(chosen === correct ? 'correct' : 'wrong');
+  if(chosen !== correct) document.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
+  const fb = document.getElementById('quizFeedback');
+  fb.style.background = chosen === correct ? 'var(--green-dim)' : 'var(--rose-dim)';
+  fb.style.border = `1px solid ${chosen === correct ? 'var(--green)' : 'var(--rose)'}`;
+  fb.style.color = chosen === correct ? 'var(--green)' : 'var(--rose)';
+  fb.innerHTML = (chosen === correct ? '✅ Correct! +30 XP ' : '❌ Not quite. ') + '<b>Explanation:</b> ' + quizzes[id].explanation;
+  fb.classList.add('show');
+  if(chosen === correct) {
+    setTimeout(() => {
+      const card = [...document.querySelectorAll('.lesson-card')].find(c => c.getAttribute('onclick')?.includes(id));
+      if(card && !card.classList.contains('done')){ card.classList.add('done'); card.querySelector('.lesson-fill').style.width='100%'; card.querySelector('[style*="color:var(--text3)"]').textContent='✅ Completed'; card.querySelector('[style*="color:var(--text3)"]').style.color='var(--green)'; }
+    }, 800);
+  }
+}
+
+function closeQuiz() {
+  document.getElementById('quizPanel').style.display='none';
+}
+
+// ── CRISIS FACILITY FINDER ─────────────────────────────────────────
+const facilities = {
+  hyderabad: [{name:'NIMHANS Telangana',addr:'Erragadda, Hyderabad 500018',phone:'040-23268011',type:'Government Hospital'},{name:'LHMC Mental Health',addr:'Masab Tank, Hyderabad',phone:'040-66101800',type:'Private Clinic'},{name:'Asha Hospital',addr:'Banjara Hills',phone:'040-23324488',type:'Private Hospital'}],
+  mumbai: [{name:'KEM Hospital Psychiatry',addr:'Parel, Mumbai 400012',phone:'022-24107000',type:'Government Hospital'},{name:'Nair Hospital',addr:'Mumbai Central',phone:'022-23027000',type:'Government Hospital'}],
+  delhi: [{name:'IHBAS Delhi',addr:'Dilshad Garden, Delhi 110095',phone:'011-22113170',type:'Government Hospital'},{name:'AIIMS Psychiatry',addr:'Ansari Nagar, New Delhi',phone:'011-26593308',type:'Government Hospital'}],
+  bangalore: [{name:'NIMHANS Bangalore',addr:'Hosur Road, Bangalore 560029',phone:'080-46110007',type:'Premier Government Institute'},{name:'Vandrevala Foundation',addr:'Pan-India Tele',phone:'1860-2662-345',type:'24/7 Helpline'}],
+  chennai: [{name:'IMHANS Chennai',addr:'Govt Stanley Hospital',phone:'044-25281401',type:'Government Hospital'},{name:'Schizophrenia Research Foundation',addr:'R.K. Nagar, Chennai',phone:'044-26142929',type:'NGO'}],
+  default: [{name:'iCall (TISS) — All India',addr:'Telephone / Online',phone:'9152987821',type:'Helpline'},{name:'Vandrevala Foundation',addr:'All India 24/7',phone:'1860-2662-345',type:'Crisis Helpline'},{name:'NIMHANS Telepsychiatry',addr:'Online / Telephone',phone:'080-46110007',type:'Government'}]
+};
+
+function findFacilities() {
+  const city = document.getElementById('cityInput').value.toLowerCase().trim();
+  const key = Object.keys(facilities).find(k => city.includes(k)) || 'default';
+  const list = facilities[key];
+  document.getElementById('facilityCity').textContent = `Results for: ${document.getElementById('cityInput').value || 'All India'} (${list.length} facilities found)`;
+  document.getElementById('facilityList').innerHTML = list.map(f => `
+    <div style="padding:14px 16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:13px;font-weight:600">${f.name}</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px">${f.addr}</div>
+        <span style="font-size:10px;padding:2px 8px;background:var(--violet-dim);border-radius:20px;color:var(--violet);margin-top:4px;display:inline-block">${f.type}</span>
+      </div>
+      <button class="btn btn-teal btn-sm" onclick="alert('📞 ${f.phone}\\n\\n${f.name}\\n${f.addr}')">${f.phone}</button>
+    </div>`).join('');
+  document.getElementById('facilityResults').style.display = 'block';
+}
+
+// ── NAV ────────────────────────────────────────────────────────────
+const pageTitles = {dashboard:'My Dashboard',checkin:'Daily Mood Check-in',biomarker:'Wellness Signals',peer:'Peer Support Circles',literacy:'Learn & Grow',crisis:'Crisis Support',profile:'My Profile'};
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if(navEl) navEl.classList.add('active');
+  document.getElementById('topbarTitle').textContent = pageTitles[id];
+  window.scrollTo(0,0);
+}
+
+function switchTab(tabGroupId, tabEl, targetId) {
+  const tabs = document.getElementById(tabGroupId).querySelectorAll('.tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  ['circle-mothers','circle-elderly','circle-disability'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = id===targetId ? 'block' : 'none';
+  });
+}
+
+function setActiveTag(el) {
+  document.querySelectorAll('.tag[onclick]').forEach(t => { t.style.borderColor=''; t.style.color=''; });
+  el.style.borderColor = 'var(--violet)';
+  el.style.color = 'var(--violet)';
+}
+
+function cycleLang(el) {
+  const langs = ['English','हिंदी','తెలుగు','தமிழ்','বাংলা'];
+  const label = document.getElementById('langLabel');
+  const idx = langs.indexOf(label.textContent);
+  label.textContent = langs[(idx+1)%langs.length];
+}
+
+function toggleSwitch(el) {
+  const thumb = el.querySelector('div');
+  const isOn = thumb.style.left === '23px';
+  thumb.style.left = isOn ? '3px' : '23px';
+  el.style.background = isOn ? 'var(--bg2)' : 'var(--violet)';
+  el.style.borderColor = isOn ? '' : 'transparent';
+}
+
+// ── MOOD CHART ─────────────────────────────────────────────────────
+function buildMoodChart() {
+  const data = [62, 45, 70, 38, 65, 78, 68];
+  const colors = data.map(v => v>=65?'var(--green)':v>=50?'var(--teal)':v>=35?'var(--amber)':'var(--rose)');
+  const chart = document.getElementById('moodChart');
+  const maxH = 90;
+  chart.innerHTML = data.map((v,i) => `
+    <div class="bar-wrap">
+      <div class="bar" style="height:${Math.round(v/100*maxH)}px;background:${colors[i]};opacity:0.85"></div>
+    </div>`).join('');
+}
+
+// ── INIT ───────────────────────────────────────────────────────────
+buildMoodChart();
+</script>
+</body>
+</html>

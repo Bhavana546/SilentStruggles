@@ -130,21 +130,7 @@ silent-struggles/
 - **Ayushman Bharat Digital Health Mission** — ABHA integration ready
 - **iCall & NIMHANS** — direct government infrastructure connection for crisis escalation
 
----
 
-## 🏆 Hackathon Details
-
-| Field | Detail |
-|---|---|
-| Event | Smart India Hackathon 2025 |
-| Problem ID | SIH-2025-MH-047 |
-| Ministry | Health & Family Welfare |
-| Theme | Healthcare & Mental Health |
-| Category | Software |
-| Prize | ₹1,00,000 |
-| Difficulty | Advanced |
-
----
 
 ## 🙏 Acknowledgements
 
@@ -153,11 +139,7 @@ silent-struggles/
 - **Vandrevala Foundation** — for free 24/7 crisis support across India
 - **Anthropic Claude** — used as the primary AI development tool to build this project
 
----
 
-## 📄 License
-
-This project is open source under the [MIT License](LICENSE).
 
 ---
 

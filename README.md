@@ -108,11 +108,10 @@ silent-struggles/
 
 ## 📸 Screenshots
 
-> Add screenshots here after cloning
-
-| Dashboard | Mood Check-in | Crisis Support |
-|---|---|---|
-| *(screenshot)* | *(screenshot)* | *(screenshot)* |
+<img width="1917" height="868" alt="Screenshot 2026-07-30 182910" src="https://github.com/user-attachments/assets/d87fe74d-d8c8-4e85-a087-33381eb71ec6" />
+<img width="1917" height="867" alt="Screenshot 2026-07-30 182902" src="https://github.com/user-attachments/assets/9448d955-94de-4de6-a35d-9cc07b0d2c58" />
+<img width="1917" height="867" alt="Screenshot 2026-07-30 182851" src="https://github.com/user-attachments/assets/80e146bd-1649-416d-863d-ae53335d5366" />
+<img width="1917" height="865" alt="Screenshot 2026-07-30 182919" src="https://github.com/user-attachments/assets/a56983eb-1ec4-44f9-9ece-d99ea237ae63" />
 
 ---
 

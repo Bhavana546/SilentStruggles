@@ -89,7 +89,7 @@ That's it. No npm install, no server, no dependencies. Opens in any browser.
 ```
 silent-struggles/
 │
-├── SilentStruggles.html      # Complete app — all features in one file
+├── index.html      # Complete app — all features in one file
 ├── README.md                 # This file
 └── assets/                   # (optional) screenshots, demo images
 ```
